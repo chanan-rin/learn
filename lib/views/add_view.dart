@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:learn/controllers/tea_controller.dart';
+import 'package:learn/models/tea_model.dart';
 
-class AddView extends StatelessWidget {
-  AddView({super.key});
+class AddView extends StatefulWidget {
+  AddView({super.key, this.tea});
+  TeaModel? tea;
+  
+  @override
+  State<AddView> createState() => _AddViewState();
+}
+  class _AddViewState extends State<AddView> {
 
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController subtitleController = TextEditingController();
+    TextEditingController titleController = TextEditingController();
+    TextEditingController subtitleController = TextEditingController();
 
-  final TeaController teaController = Get.put(TeaController());
+    TeaController teaController = Get.put(TeaController());
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.tea != null) {
+    titleController.text = widget.tea!.title;
+    subtitleController.text = widget.tea!.subtitle;
+  }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Menu")),
+      appBar: AppBar(
+        title: widget.tea == null ? Text("Add Menu") : Text("Edit Menu")),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
@@ -47,10 +64,18 @@ class AddView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (titleController.text.isEmpty) return;
-                  teaController.addMenu(
-                    titleController.text,
-                    subtitleController.text,
-                  );
+                  if (widget.tea != null) {
+                    teaController.updateMenu(
+                      widget.tea!.docId ?? '',
+                      titleController.text,
+                      subtitleController.text,
+                    );
+                  } else {
+                    teaController.addMenu(
+                      titleController.text,
+                      subtitleController.text,
+                    );
+                  }
                   Get.back();
                   Get.snackbar(
                     "แจ้งเตือน",

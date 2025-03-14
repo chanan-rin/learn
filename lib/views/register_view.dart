@@ -20,8 +20,12 @@ class RegisterView extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-              image: NetworkImage("https://i.pinimg.com/736x/25/43/ce/2543ce8560994a8ff57a1f53fddff0ee.jpg"), // ใส่ภาพ background ที่เหมือนใน UI
+              image: NetworkImage("https://i.pinimg.com/736x/9f/80/50/9f80508ba282ac3f864791d1e14f824d.jpg"), // ใส่ภาพ background ที่เหมือนใน UI
               fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.6), // ปรับค่าความหม่น (0.0 - 1.0)
+              BlendMode.darken, // ใช้โหมด darken เพื่อให้ภาพดูมืดลง
+            ),
               ),
             ),
           ),
@@ -32,6 +36,15 @@ class RegisterView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Text(
+                    "Tea Charm Cafe",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                   // ข้อความ Welcome
                   Text(
                     "Create Account",
@@ -125,7 +138,7 @@ class RegisterView extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: Colors.blueAccent,
+                      foregroundColor: const Color.fromARGB(255, 85, 56, 45),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
